@@ -1,18 +1,32 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+    <v-container>
+        <v-row>
+            <FileHandler @FileHandling="FileHandling" />
+        </v-row>
+    </v-container>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import FileHandler from "../components/FileHandler";
 
 export default {
-  name: 'home',
-  components: {
-    HelloWorld
-  }
-}
+    name: "home",
+    data() {
+        return {
+            file: {
+                image: null,
+                music: null,
+                music_preview: null
+            },
+            music: null,
+            music_preview: null
+        };
+    },
+    components: {
+        FileHandler
+    },
+    methods: {
+        FileHandling(payload) {}
+    }
+};
 </script>
