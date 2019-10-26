@@ -1,18 +1,38 @@
 <template>
     <v-col cols="12">
         <v-card>
-            <v-card-title>File</v-card-title>
+            <v-toolbar flat dark color="indigo">
+                <v-toolbar-title>Required Files</v-toolbar-title>
+            </v-toolbar>
             <v-divider></v-divider>
             <v-container>
                 <v-row>
-                    <v-col cols="12" sm="4">
-                        <v-file-input prepend-icon="mdi-music" label="Music File" outlined></v-file-input>
+                    <v-col cols="12" md="4">
+                        <v-file-input
+                            @change="setMusic"
+                            prepend-icon="mdi-music"
+                            label="Music File"
+                            accept=".mp3"
+                            outlined
+                        ></v-file-input>
                     </v-col>
-                    <v-col cols="12" sm="4">
-                        <v-file-input prepend-icon="mdi-music" label="Music Preview" outlined></v-file-input>
+                    <v-col cols="12" md="4">
+                        <v-file-input
+                            @change="setMusicPreview"
+                            prepend-icon="mdi-music"
+                            label="Music Preview"
+                            accept=".mp3"
+                            outlined
+                        ></v-file-input>
                     </v-col>
-                    <v-col cols="12" sm="4">
-                        <v-file-input prepend-icon="mdi-json" label="Global Storyboard"></v-file-input>
+                    <v-col cols="12" md="4">
+                        <v-file-input
+                            @change="setBackground"
+                            prepend-icon="mdi-image"
+                            label="Background Image"
+                            accept="image/jpeg, image/png"
+                            outlined
+                        ></v-file-input>
                     </v-col>
                 </v-row>
             </v-container>
@@ -25,23 +45,26 @@ export default {
     name: "file-handler",
     data() {
         return {
-            music: null,
-            music_preview: null,
-            storyboard: null
+            payload: {
+                music: null,
+                music_preview: null,
+                background: null
+            }
         };
     },
     methods: {
         setMusic(val) {
             console.log(val);
-            this.music = val;
+            this.payload.music = val;
+            this.$emit("FileHandling", this.payload);
         },
         setMusicPreview(val) {
-            console.log(val);
-            this.music_preview = val;
+            this.payload.music_preview = val;
+            this.$emit("FileHandling", this.payload);
         },
-        setStoryboard(val) {
-            console.log(val);
-            this.storyboard = val;
+        setBackground(val) {
+            this.payload.background = val;
+            this.$emit("FileHandling", this.payload);
         }
     }
 };
