@@ -28,7 +28,9 @@
             <v-col cols="12">
                 <v-card>
                     <v-container>
-                        <Version />
+                        <Version :version="version" @set-version="setVersion" />
+                        <Title @set-title="setTitle" />
+                        <Artist @set-artist="setArtist" />
                     </v-container>
                 </v-card>
             </v-col>
@@ -40,6 +42,8 @@
 import ChartHandler from "../components/ChartHandler";
 import FileHandler from "../components/FileHandler";
 import Version from "../components/Metadata/Version";
+import Title from "../components/Metadata/Title";
+import Artist from "../components/Metadata/Artist";
 
 export default {
     name: "home",
@@ -58,13 +62,20 @@ export default {
             },
             background: {
                 path: ""
-            }
+            },
+            version: 1,
+            title: "",
+            title_localized: undefined,
+            artist: "",
+            artist_localized: undefined
         };
     },
     components: {
         FileHandler,
         ChartHandler,
-        Version
+        Version,
+        Title,
+        Artist
     },
     methods: {
         FileHandling(payload) {
@@ -81,6 +92,25 @@ export default {
                 this.music_preview.path = payload.music_preview.path
                     .split("/")
                     .pop();
+            }
+        },
+        setVersion(val) {
+            this.version = val;
+        },
+        setTitle({ title, title_localized }) {
+            if (title) {
+                this.title = title;
+            }
+            if (title_localized) {
+                this.title_localized = title_localized;
+            }
+        },
+        setArtist({ artist, artist_localized }) {
+            if (artist) {
+                this.artist = artist;
+            }
+            if (artist_localized) {
+                this.artist_localized = artist_localized;
             }
         }
     }
