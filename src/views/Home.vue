@@ -30,7 +30,8 @@
                     <v-container>
                         <Version :version="version" @set-version="setVersion" />
                         <Title @set-title="setTitle" />
-                        <Artist @set-artist="setArtist" />
+                        <Artist @set-artist="setArtist" />,
+                        <Charter :data="{charter, title, _id}" @set-chart="setChart" />
                     </v-container>
                 </v-card>
             </v-col>
@@ -44,6 +45,7 @@ import FileHandler from "../components/FileHandler";
 import Version from "../components/Metadata/Version";
 import Title from "../components/Metadata/Title";
 import Artist from "../components/Metadata/Artist";
+import Charter from "../components/Metadata/Charter";
 
 export default {
     name: "home",
@@ -63,19 +65,33 @@ export default {
             background: {
                 path: ""
             },
-            version: 1,
+            version: null,
             title: "",
             title_localized: undefined,
             artist: "",
-            artist_localized: undefined
+            artist_localized: undefined,
+            charter: "",
+            id: ""
         };
+    },
+    computed: {
+        _id() {
+            if (this.charter && this.title) {
+                return (
+                    this.charter.toLowerCase() + "." + this.title.toLowerCase()
+                );
+            } else {
+                return "";
+            }
+        }
     },
     components: {
         FileHandler,
         ChartHandler,
         Version,
         Title,
-        Artist
+        Artist,
+        Charter
     },
     methods: {
         FileHandling(payload) {
@@ -112,6 +128,10 @@ export default {
             if (artist_localized) {
                 this.artist_localized = artist_localized;
             }
+        },
+        setChart({ charter, id }) {
+            charter ? (this.charter = charter) : "";
+            id ? (this.id = id) : "";
         }
     }
 };

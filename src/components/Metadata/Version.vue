@@ -5,7 +5,6 @@
                 label="Chart Version"
                 type="number"
                 v-model="_version"
-                placeholder="1"
                 outlined
                 prepend-inner-icon="mdi-numeric"
             ></v-text-field>
